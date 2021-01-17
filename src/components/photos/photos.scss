@@ -1,0 +1,84 @@
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
+
+.photos-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    padding: 36px;
+    height: 500px;
+
+    .photo-details {
+        display: flex;
+        flex-direction: column;
+        width: 150px;
+        margin-bottom: 30px;
+
+        .photo-title {
+            display: none;
+        }
+
+        .photo-img {
+            display: flex;
+        }
+
+        &:hover {
+            .photo-title {
+                display: flex;
+                padding: 20px;
+            }
+    
+            .photo-img {
+                display: none;
+            }
+        }
+    }
+}
+
+.image-gallery {
+    width: 100%;
+}
+.image-gallery-swipe{
+    &:focus {
+        outline: none;
+    }
+}
+
+.image-gallery-slides {
+    &:focus {
+        outline: none;
+    }
+}
+
+.image-gallery-slide {
+    &:focus {
+        outline: none;
+    }
+}
+
+.image-gallery-slide .image-gallery-image {
+    width: 400px;
+}
+
+.image-gallery-thumbnail {
+    width: 70px;
+}
+
+.image-gallery-slide .image-gallery-description {
+    background-color: #002458;
+}
+
+.image-gallery-left-nav .image-gallery-svg, .image-gallery-right-nav .image-gallery-svg {
+    width: 30px;
+}
+
+.image-gallery-icon {
+    filter: none;
+    color: #002458;
+}
+
+.image-gallery-thumbnails-wrapper {
+    margin-top: 16px;
+}

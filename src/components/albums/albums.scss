@@ -1,0 +1,99 @@
+.headline-album {
+    color: #FE5400;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+.albums-container {
+    background-color: #D8DDE6;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    .albums-list {
+        list-style: square;
+        font-size: 36px;
+        padding: 20px;
+
+        .album-detail {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+
+            .album-item {
+                align-items: center;
+                display: flex;
+
+               .album {
+                   background-color: transparent;
+                   border: none;
+                   color: #000033;
+                   font-size: 16px;
+                   align-self: start;
+                   padding: 10px 0;
+                   text-align: left;
+                   text-transform: capitalize;
+
+                   &:hover{
+                       cursor: pointer;
+                       color: #FE5400;
+                   }
+                   &:focus{
+                       border: none;
+                       outline: none;
+                   }
+               }
+            }
+    
+            .active-album-item {
+                @extend .album-item;
+                color: #FE5400;
+
+                .album {
+                    color: #FE5400;
+                }
+                
+            }
+
+            .delete-btn {
+                background-color: transparent;
+                border: none;
+                font-size: 22px;
+                padding-left: 20px;
+
+                &:hover{
+                    cursor: pointer;
+                    color: #FE5400;
+                }
+                &:focus{
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    .add-new {
+        background-color: #FF5400;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-weight: 700;
+        width: 140px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-self: flex-start;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+    }
+}
