@@ -31,6 +31,7 @@ export function Albums() {
 
     const dispatch = useDispatch();
     const [albums, setAlbums ] = useState([]);
+    const [ newAlbum, setNewAlbum ] = useState({});
     const selectedUserID = useSelector(state => state.selectedUser);
     const selectedAlbumID = useSelector(state => state.selectedAlbum);
 
@@ -43,6 +44,15 @@ export function Albums() {
         }
         get();
     },[selectedUserID]);
+
+    useEffect(()=>{
+        if (newAlbum.id) {
+            let tempArr = albums;
+            tempArr.push(newAlbum);
+            setNewAlbum(tempArr);
+            dispatch(changeAlbum(newAlbum.id));
+        }
+    },[newAlbum, albums, dispatch])
 
     async function removeAlbum(albumId) {
         if (albumId > -1) {
@@ -77,7 +87,7 @@ export function Albums() {
                 </div>
                 <button className="add-new" onClick={() => dispatch(modalStatus())}>ADD NEW</button>
             </div>
-            <NewAlbumModal />
+            <NewAlbumModal newAlbum={newAlbum} setNewAlbum={setNewAlbum} />
         </div>
     )
 }

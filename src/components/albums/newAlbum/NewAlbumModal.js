@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { modalStatus } from "../../../app/actions";
+import { modalStatus, addPhotos } from "../../../app/actions";
 import Modal from 'react-modal';
 import axios from 'axios';
 import { trackPromise } from 'react-promise-tracker';
@@ -27,17 +27,15 @@ async function uploadPhotos(newAlbumPhotos) {
     }
 }
 
-export function NewAlbumModal() {
+export function NewAlbumModal(props) {
+    const {setNewAlbum, newAlbum} = props;
 
     const isModalOpen = useSelector(state => state.albumModalStatus);
     const selectedUserID = useSelector(state => state.selectedUser);
     const dispatch = useDispatch();
 
-    const [ uploadedPhotos, setUploadedPhotos ] = useState([]);
+    const [ photoFiles, setPhotoFiles ] = useState([]);
     const [ newAlbumTitle, setNewAlbumTitle ] = useState("");
-    
-    const [ newAlbum, setNewAlbum ] = useState([]);
-    const [ newAlbumPhotos, setNewAlbumPhotos ] = useState([]);
 
     const handleChange = (e) => {        
         setNewAlbumTitle(e.target.value);
@@ -47,13 +45,13 @@ export function NewAlbumModal() {
     const {getRootProps, getInputProps} = useDropzone({
         accept: 'image/*',
         onDrop: acceptedFiles => {
-            setUploadedPhotos(acceptedFiles.map(file => Object.assign(file, {
+            setPhotoFiles(acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
             })));
         }
     });
 
-    const thumbs = uploadedPhotos.map(file => (
+    const thumbs = photoFiles.map(file => (
         <div className="thumb" key={file.name}>
           <div className="thumbInner">
             <img
@@ -70,17 +68,20 @@ export function NewAlbumModal() {
         if (!newAlbumTitle.length) {
             return alert("Enter Album Name");
         }
+        if (!photoFiles.length) {
+            return alert("No Photos Selected");
+        }
         else {
             const id = new Date().getTime();
-            setNewAlbum([
+            setNewAlbum(
                 {
                     "userId": selectedUserID,
                     "id": id,
                     "title": newAlbumTitle,
                 }
-            ]);
+            );
             const photos = [];
-            uploadedPhotos.map( photo => 
+            photoFiles.map( photo => 
                     photos.push({
                         "albumId": id,
                         "id": photo.lastModified,
@@ -89,13 +90,13 @@ export function NewAlbumModal() {
                         "thumbnailUrl": photo.preview,
                     })
                 );
-            setNewAlbumPhotos(photos);
 
             await trackPromise(uploadAlbum(newAlbum));
-            await trackPromise(uploadPhotos(newAlbumPhotos));
-
+            await trackPromise(uploadPhotos(photos));
+            
+            dispatch(addPhotos(photos));
             dispatch(modalStatus());
-            setUploadedPhotos([]);
+            setPhotoFiles([]);
         }
     }
 
@@ -122,7 +123,7 @@ export function NewAlbumModal() {
                 <div className="modal-btn">
                     <button className="add-btn" onClick={() => createAlbum()}> ADD </button>
                     <button className="cancel-btn" onClick={() => {
-                        setUploadedPhotos([]);
+                        setPhotoFiles([]);
                         dispatch(modalStatus());
                     }}>CANCEL</button>
                 </div>

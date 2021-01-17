@@ -23,3 +23,10 @@ export const noAlbum = () => ({
 export const modalStatus = () => ({
     type: "CHANGE_MODAL_STATUS",
 });
+
+//SELECTED PHOTOS
+export const addPhotos = content => ({
+    type: "ADD_PHOTOS",
+    value: content
+});
+

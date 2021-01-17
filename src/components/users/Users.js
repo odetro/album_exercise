@@ -21,7 +21,6 @@ export function Users() {
 
     const [users, setUsers] = useState([]);
     const dispatch = useDispatch();
-    const selectedAlbumID = useSelector(state => state.selectedAlbum);
     const selectedUserID = useSelector(state => state.selectedUser);
     const dropdownHidden = useSelector(state => state.userDropMenuStatus);
 
@@ -33,7 +32,7 @@ export function Users() {
             }
         }
         get();
-    },[selectedAlbumID]);
+    },[]);
 
     function activeUser(user){
         if (user.id === selectedUserID) {

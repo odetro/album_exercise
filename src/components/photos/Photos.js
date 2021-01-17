@@ -20,8 +20,10 @@ async function getPhotos(AlbumID) {
 export function Photos() {
 
     const selectedAlbumID = useSelector(state => state.selectedAlbum);
+    const uploadedPhotos = useSelector(state => state.selectedPhotos);
 
     const [photos, setPhotos] = useState([]);
+    const [gallery, setGallery] = useState([]);
 
     useEffect(() => {
         const get = async () => {
@@ -33,32 +35,40 @@ export function Photos() {
         get();
     },[selectedAlbumID]);
 
-    function prepareGallery() {
-        if (photos && photos.length === 0) {
+    useEffect(()=>{
+        setPhotos(uploadedPhotos);
+    },[uploadedPhotos]);
+
+    function prepareGallery(photos) {
+        return photos.map(photo => {
+            return {
+                id: photo.id,
+                title: photo.title,
+                original: photo.url,
+                thumbnail: photo.thumbnailUrl,
+                description: photo.title,
+            }
+        })
+    }
+
+    useEffect(()=>{
+        setGallery([...prepareGallery(photos)]);
+    },[photos])
+
+    function getGallery() {
+        if (gallery.length === 0) {
             return <img src={emptyPhotos} alt="no photos" />
         }
-        if (photos && photos.length > 0) {
-            let gallery = [];
-            photos.map(photo => {
-                gallery.push({
-                    id: photo.id,
-                    title: photo.title,
-                    original: photo.url,
-                    thumbnail: photo.thumbnailUrl,
-                    description: photo.title,
-                })
-            })
-            return <ImageGallery 
-                        items={gallery}
-                        showPlayButton={false}
-                        showFullscreenButton={false}
-                    />;
-        }
+        return <ImageGallery 
+                items={gallery}
+                showPlayButton={false}
+                showFullscreenButton={false}
+                />;
     }
 
     return (
         <div className="photos-container">
-            {prepareGallery()}
+            {getGallery()}
         </div>
     )
 }
