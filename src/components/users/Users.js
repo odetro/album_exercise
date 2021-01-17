@@ -3,6 +3,7 @@ import axios from 'axios';
 import './user.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { noAlbum, changeUser, dropdownStatus } from "../../app/actions.js";
+import { trackPromise } from 'react-promise-tracker';
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com';
@@ -26,7 +27,7 @@ export function Users() {
 
     useEffect(() => {
         const get = async () => {
-            const result = await getUsers();
+            const result = await trackPromise(getUsers());
             if (result) {
                 setUsers(result);
             }

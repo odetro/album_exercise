@@ -13,7 +13,9 @@
     "react-dropzone": "^11.2.4",
     "react-icons": "^4.1.0",
     "react-image-gallery": "^1.0.8",
+    "react-loader-spinner": "^3.1.14",
     "react-modal": "^3.12.1",
+    "react-promise-tracker": "^2.1.0",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
     "sass": "^1.32.4"

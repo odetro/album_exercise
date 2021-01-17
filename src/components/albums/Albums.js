@@ -3,6 +3,7 @@ import axios from 'axios';
 import './albums.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeAlbum, modalStatus, noAlbum } from '../../app/actions';
+import { trackPromise } from 'react-promise-tracker';
 import { NewAlbumModal } from './newAlbum/NewAlbumModal';
 import { TiDelete } from "react-icons/ti";
 
@@ -35,7 +36,7 @@ export function Albums() {
 
     useEffect(() => {
         const get = async () => {
-            const result = await getAlbums(selectedUserID);
+            const result = await trackPromise(getAlbums(selectedUserID));
             if (result) {
                 setAlbums(result);
             }
@@ -45,7 +46,7 @@ export function Albums() {
 
     async function removeAlbum(albumId) {
         if (albumId > -1) {
-            await deleteAlbum(albumId);
+            await trackPromise(deleteAlbum(albumId));
             const albumIndex = albums.findIndex((album)=> album.id === albumId);
             let tempArr = albums;
             tempArr.splice(albumIndex,1);

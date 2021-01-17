@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { modalStatus } from "../../../app/actions";
 import Modal from 'react-modal';
 import axios from 'axios';
+import { trackPromise } from 'react-promise-tracker';
 import { useDropzone } from 'react-dropzone';
 import './newAlbum.scss';
 
@@ -90,8 +91,8 @@ export function NewAlbumModal() {
                 );
             setNewAlbumPhotos(photos);
 
-            await uploadAlbum(newAlbum);
-            await uploadPhotos(newAlbumPhotos);
+            await trackPromise(uploadAlbum(newAlbum));
+            await trackPromise(uploadPhotos(newAlbumPhotos));
 
             dispatch(modalStatus());
             setUploadedPhotos([]);

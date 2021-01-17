@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import ImageGallery from 'react-image-gallery';
+import { trackPromise } from 'react-promise-tracker';
 import './photos.scss';
 import emptyPhotos from '../../empty_photos.svg';
 
@@ -24,7 +25,7 @@ export function Photos() {
 
     useEffect(() => {
         const get = async () => {
-            const result = await getPhotos(selectedAlbumID);
+            const result = await trackPromise(getPhotos(selectedAlbumID));
             if (result) {
                 setPhotos(result);
             }
