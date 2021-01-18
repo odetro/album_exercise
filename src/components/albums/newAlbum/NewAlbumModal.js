@@ -65,10 +65,10 @@ export function NewAlbumModal(props) {
     //DROPZONE-END
 
     async function createAlbum () {
-        if (!newAlbumTitle.length) {
+        if (newAlbumTitle.length === 0) {
             return alert("Enter Album Name");
         }
-        if (!photoFiles.length) {
+        if (photoFiles.length === 0) {
             return alert("No Photos Selected");
         }
         else {
@@ -93,7 +93,7 @@ export function NewAlbumModal(props) {
 
             await trackPromise(uploadAlbum(newAlbum));
             await trackPromise(uploadPhotos(photos));
-            
+
             dispatch(addPhotos(photos));
             dispatch(modalStatus());
             setPhotoFiles([]);
