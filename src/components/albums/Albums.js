@@ -46,13 +46,14 @@ export function Albums() {
     },[selectedUserID]);
 
     useEffect(()=>{
+        console.log(newAlbum);
         if (newAlbum.id) {
             let tempArr = albums;
             tempArr.push(newAlbum);
-            setNewAlbum(tempArr);
+            setAlbums([...tempArr]);
             dispatch(changeAlbum(newAlbum.id));
         }
-    },[newAlbum, albums, dispatch])
+    },[newAlbum, dispatch]);
 
     async function removeAlbum(albumId) {
         if (albumId > -1) {
